@@ -1,8 +1,9 @@
 project:
   type: website
+  output-dir: docs
 
 website:
-  title: "week1_blog"
+  title: "Renata's blog"
   navbar:
     right:
       - about.qmd

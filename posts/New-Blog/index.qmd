@@ -1,7 +1,0 @@
----
-title: "New Blog"
-author: "Renata"
-categories: [R]
----
-
-### Introduction
