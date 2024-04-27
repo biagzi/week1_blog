@@ -1,9 +1,0 @@
----
-title: "New Post With Code"
-author: "Renata"
-date: "2024-01-31"
-categories: [R]
-image: "image.jpg"
----
-
-### New post

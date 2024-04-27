@@ -1,6 +1,6 @@
 ---
 title: "About"
-image: profile.jpg
+image: simba.jpeg
 about:
   template: jolla
   links:
@@ -15,4 +15,10 @@ about:
       href: https://github.com
 ---
 
-About this blog
+I am a first year graduate student in Psychology at Princeton University.
+
+I am originally from Brazil, where I completed my undergrad in Physics and Masters in Bioinformatic. I love to share and discuss science, mostly quantitative methods to tackle interdisciplinary problems in evolution, development, and animal behavior.
+
+Feel free to contact me :)
+
+(In the photo you can see Simba, my adorable dog!)

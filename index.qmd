@@ -1,5 +1,5 @@
 ---
-title: "week1_blog"
+title: "What can you find here?"
 listing:
   contents: posts
   sort: "date desc"

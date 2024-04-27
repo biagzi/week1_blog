@@ -1,12 +1,10 @@
 ---
 title: "Welcome To My Blog"
-author: "Tristan O'Malley"
-date: "2024-01-28"
+author: "Renata B Biazzi"
+date: "2024-04-26"
 categories: [news]
 ---
 
-This is the first post in a Quarto blog. Welcome!
+This is my first post in a Quarto blog. Welcome to my blog!!
 
-![](thumbnail.jpg)
-
-Since this post doesn't specify an explicit `image`, the first image in the post will be used in the listing page of posts.
+I will share with you some statistic concepts that I found super interesting.
