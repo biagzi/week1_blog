@@ -1,0 +1,5 @@
+"0","#can do this with emmeans but requires more steps"
+"0","library(marginaleffects) # get predicted probs"
+"0","# get marginal effects"
+"0","avg_comparisons(fit2, comparison = ""difference"") %>% "
+"0","  kable()"

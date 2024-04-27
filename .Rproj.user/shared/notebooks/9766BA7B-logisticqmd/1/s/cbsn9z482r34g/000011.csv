@@ -1,0 +1,9 @@
+"0","library(easystats)"
+"0","library(MASS)"
+"0","library(arm) # residual plot"
+"0","library(effectsize) "
+"0","library(tidyverse)"
+"0","library(equatiomatic)"
+"2","Error in library(equatiomatic) : 
+  there is no package called ‘equatiomatic’
+"

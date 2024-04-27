@@ -1,0 +1,6 @@
+"0","#yi = B0 + B1*x + rij #level 1"
+"0","# B0 = b0 + bj        #level 2, random intercepts"
+"0","# B1 = c0 + cj           #level 2,  random slope"
+"0",""
+"0","level1_model_interaction = lmer(ETW_SpringK ~ TRT*PPVT_FallK + (1|clu_id), data = df, REML=FALSE)"
+"0",""

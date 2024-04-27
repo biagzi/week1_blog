@@ -1,0 +1,7 @@
+"0",""
+"0","plot(age_prob) +"
+"0","  labs(title = ""Relationship between age and Attitude towards Spending on Mass Transportation"","
+"0","       x = ""age"","
+"0","       y = ""Predicted Probability"") +"
+"0","  theme_minimal()"
+"0",""

@@ -1,0 +1,4 @@
+"0","fit <- with(data = imp_multiple, expr = lm(lpo ~ lpr))"
+"0",""
+"0","summary(fit) %>%"
+"0","  kable()"

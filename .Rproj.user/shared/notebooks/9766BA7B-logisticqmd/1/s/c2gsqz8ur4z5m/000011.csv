@@ -1,0 +1,2 @@
+"0","tidy(fit2,exponentiate = TRUE) %>%  # get odds ratio %>%"
+"0","  kable()"

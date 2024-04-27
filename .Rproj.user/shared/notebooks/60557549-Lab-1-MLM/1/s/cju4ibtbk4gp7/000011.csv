@@ -1,0 +1,8 @@
+"0",""
+"0","mean_centering <- demean(df, select=c(""PPVT_FallK""), group=""clu_id"") "
+"0","#gets within-group and included cluster means"
+"0","#within-clustering centering"
+"0","df$PPVT_FallK_meanscentered = mean_centering$PPVT_FallK_within"
+"0","df$PPVT_FallK_groupmeans = mean_centering$PPVT_FallK_between"
+"0",""
+"0","head(df)"

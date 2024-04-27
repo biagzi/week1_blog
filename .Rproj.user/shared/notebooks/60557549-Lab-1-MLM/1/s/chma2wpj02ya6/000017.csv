@@ -1,0 +1,22 @@
+"0","# fit the best model and output a nice summary table of results. "
+"0",""
+"0","library(afex) # load afex in "
+"0",""
+"0","m <- mixed(ETW_SpringK ~ TRT * PPVT_FallK + (1+ TRT|clu_id), data=df, method = ""LRT"") # fit lmer using afex"
+"2","Contrasts set to contr.sum for the following variables: TRT
+"
+"2","Numerical variables NOT centered on 0: PPVT_FallK
+If in interactions, interpretation of lower order (e.g., main) effects difficult.
+"
+"2","REML argument to lmer() set to FALSE for method = 'PB' or 'LRT'
+"
+"1","Fitting 4 (g)lmer() models:
+["
+"1","."
+"1","."
+"1","."
+"1","."
+"1","]
+"
+"0","nice(m) %>%"
+"0","  kable()"

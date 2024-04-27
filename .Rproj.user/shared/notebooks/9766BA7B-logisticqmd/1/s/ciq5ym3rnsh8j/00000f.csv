@@ -1,0 +1,2 @@
+"0","#performance::binned_residuals()"
+"0","binnedplot(fitted(fit4), residuals(fit4, type=""response""))"

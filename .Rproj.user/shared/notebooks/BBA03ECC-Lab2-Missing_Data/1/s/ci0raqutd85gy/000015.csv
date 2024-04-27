@@ -1,0 +1,3 @@
+"0","d_listwise = d %>%"
+"0","  drop_na() "
+"0","head(d_listwise)"

@@ -1,0 +1,7 @@
+"0","# fit"
+"0","fit2 <- glm("
+"0","  lose.wt.01 ~ 1 + female, "
+"0","  data = risk2009,"
+"0","  family = binomial,"
+"0",")"
+"0",""

@@ -1,0 +1,6 @@
+"0","# Replace ""89 or older"" with 90"
+"0","data$age[data$age == ""89 or older""] = 90"
+"0",""
+"0","# Convert 'age' to numeric"
+"0","data$age <- as.numeric(data$age)"
+"0",""

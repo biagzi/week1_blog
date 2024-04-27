@@ -1,0 +1,4 @@
+"0",""
+"0","data = read.csv(""data/gss2016.csv"")"
+"0",""
+"0","data"

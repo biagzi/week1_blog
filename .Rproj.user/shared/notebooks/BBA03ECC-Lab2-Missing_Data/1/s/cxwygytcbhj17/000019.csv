@@ -1,0 +1,5 @@
+"0","ggmice(imp2, ggplot2::aes(x = lpr, y = lpo, faceted = .imp)) +"
+"0","  ggplot2::geom_jitter() + "
+"0","  ggplot2::geom_point(size = 1,alpha = 0.6) + "
+"0","    labs(x = ""lpr"",y = ""lpo"")"
+"0",""

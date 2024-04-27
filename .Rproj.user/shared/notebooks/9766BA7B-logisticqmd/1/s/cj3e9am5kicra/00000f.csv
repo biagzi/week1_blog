@@ -1,0 +1,2 @@
+"0","b0 <- coef(fit2)[1] %>% as.double()"
+"0","b1 <- coef(fit2)[2] %>% as.double()"

@@ -1,0 +1,8 @@
+"0","b0 <- coef(fit1) # get coef"
+"0","exp(b0) / (1 + exp(b0)) # logistic transform"
+"1","(Intercept) "
+"1","
+"
+"1","   0.447191 "
+"1","
+"

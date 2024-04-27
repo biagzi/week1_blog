@@ -1,0 +1,8 @@
+"0","d <- d %>%#can also use case_when #if missing 1 else "
+"0","  mutate("
+"0","      r_iqv = ifelse(is.na(iqv), 1, 0),"
+"0","      r_ses = ifelse(is.na(ses), 1, 0),"
+"0","      r_lpr = ifelse(is.na(lpr), 1, 0),"
+"0","      r_lpo = ifelse(is.na(lpo), 1, 0),"
+"0","  )"
+"0","d %>% head() %>% kable()"

@@ -1,0 +1,16 @@
+"0","library(ggeffects)"
+"0",""
+"0","model <- glm(bin_amount_transport ~ 1 + polviews + age + sex + sei10, data = data, family = binomial)"
+"0","sex_prob <- ggpredict(model, terms = c(""sex""), type = ""fixed"")"
+"0","sei10_prob <- ggpredict(model, terms = c(""sei10""), type = ""fixed"")"
+"2","Data were 'prettified'. Consider using `terms=""sei10 [all]""` to get smooth plots.
+"
+"0","polviews_prob <- ggpredict(model, terms = c(""polviews""), type = ""fixed"")"
+"0","age_prob <- ggpredict(model, terms = c(""age""), type = ""fixed"")"
+"2","Data were 'prettified'. Consider using `terms=""age [all]""` to get smooth plots.
+"
+"0","plot(polviews_prob) +"
+"0","  labs(title = ""Relationship between Political Views and Attitude towards Spending on Mass Transportation"","
+"0","       x = ""Political Views"","
+"0","       y = ""Predicted Probability"") +"
+"0","  theme_minimal()"

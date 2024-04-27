@@ -1,0 +1,90 @@
+"0","modelsummary::modelsummary(list(""max model"" = level1_model_TRT), output=""html"") # modelsummary package"
+"1","<table class=""table"" style=""color: black; width: auto !important; margin-left: auto; margin-right: auto;"">
+ <thead>
+  <tr>
+   <th style=""text-align:left;"">   </th>
+   <th style=""text-align:center;""> max model </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style=""text-align:left;""> (Intercept) </td>
+   <td style=""text-align:center;""> −18.068 </td>
+  </tr>
+  <tr>
+   <td style=""text-align:left;"">  </td>
+   <td style=""text-align:center;""> (4.765) </td>
+  </tr>
+  <tr>
+   <td style=""text-align:left;""> TRT1 </td>
+   <td style=""text-align:center;""> −12.381 </td>
+  </tr>
+  <tr>
+   <td style=""text-align:left;"">  </td>
+   <td style=""text-align:center;""> (6.981) </td>
+  </tr>
+  <tr>
+   <td style=""text-align:left;""> PPVT_FallK </td>
+   <td style=""text-align:center;""> 0.312 </td>
+  </tr>
+  <tr>
+   <td style=""text-align:left;"">  </td>
+   <td style=""text-align:center;""> (0.056) </td>
+  </tr>
+  <tr>
+   <td style=""text-align:left;""> TRT1 × PPVT_FallK </td>
+   <td style=""text-align:center;""> 0.271 </td>
+  </tr>
+  <tr>
+   <td style=""text-align:left;"">  </td>
+   <td style=""text-align:center;""> (0.083) </td>
+  </tr>
+  <tr>
+   <td style=""text-align:left;""> SD (Intercept clu_id) </td>
+   <td style=""text-align:center;""> 2.346 </td>
+  </tr>
+  <tr>
+   <td style=""text-align:left;""> SD (TRT1 clu_id) </td>
+   <td style=""text-align:center;""> 6.691 </td>
+  </tr>
+  <tr>
+   <td style=""text-align:left;""> Cor (Intercept~TRT1 clu_id) </td>
+   <td style=""text-align:center;""> 0.392 </td>
+  </tr>
+  <tr>
+   <td style=""text-align:left;box-shadow: 0px 1.5px""> SD (Observations) </td>
+   <td style=""text-align:center;box-shadow: 0px 1.5px""> 7.547 </td>
+  </tr>
+  <tr>
+   <td style=""text-align:left;""> Num.Obs. </td>
+   <td style=""text-align:center;""> 1427 </td>
+  </tr>
+  <tr>
+   <td style=""text-align:left;""> R2 Marg. </td>
+   <td style=""text-align:center;""> 0.262 </td>
+  </tr>
+  <tr>
+   <td style=""text-align:left;""> R2 Cond. </td>
+   <td style=""text-align:center;""> 0.543 </td>
+  </tr>
+  <tr>
+   <td style=""text-align:left;""> AIC </td>
+   <td style=""text-align:center;""> 10210.1 </td>
+  </tr>
+  <tr>
+   <td style=""text-align:left;""> BIC </td>
+   <td style=""text-align:center;""> 10252.2 </td>
+  </tr>
+  <tr>
+   <td style=""text-align:left;""> ICC </td>
+   <td style=""text-align:center;""> 0.4 </td>
+  </tr>
+  <tr>
+   <td style=""text-align:left;""> RMSE </td>
+   <td style=""text-align:center;""> 6.98 </td>
+  </tr>
+</tbody>
+</table>"
+"1",""
+"1","
+"

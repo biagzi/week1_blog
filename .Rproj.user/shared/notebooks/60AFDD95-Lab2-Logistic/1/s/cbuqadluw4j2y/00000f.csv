@@ -1,0 +1,6 @@
+"0"," "
+"0","polviews_levels <- c(""Extremely liberal"",""Liberal"",""Slightly liberal"", ""Moderate"",""Slghtly conservative"", ""Conservative"", ""Extrmly conservative"")"
+"0",""
+"0","# Recode 'polviews' into a factor with specified levels"
+"0","data$polviews <- factor(data$polviews, levels = polviews_levels)"
+"0",""

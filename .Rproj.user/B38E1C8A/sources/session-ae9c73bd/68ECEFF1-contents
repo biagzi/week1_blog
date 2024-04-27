@@ -1,0 +1,114 @@
+---
+title: "Bayesian regression"
+author: "Renata B. Biazzi"
+date: "2024-04-27"
+categories: [news, code, analysis]
+image: "Petal-sepal.jpg"
+---
+
+In this tutorial, I will show how to do a **Bayesian regression** using [brms](https://cran.r-project.org/web/packages/brms/index.html)!
+
+The first part is loading the necessary packages:
+
+```{r}
+library(datasets) #to open the dataset
+library(rstan) 
+library(brms)
+library(psych) #to summary statistics
+library(tidyverse) # for data manipulation and plotting
+```
+
+In this tutorial, we will use data from the Iris data set - maybe one of the most famous data sets ever. It was used by the British statistician and biologist Ronald Fisher to show how to distinguish three different, but related, species of Iris flowers using their morphological features. Edgar Anderson collected the data when he was trying to quantify the morphological variation of them.
+
+Data description:
+
+50 samples from each of the three species ([*Iris setosa*](https://en.wikipedia.org/wiki/Iris_setosa "Iris setosa"), [*Iris virginica*](https://en.wikipedia.org/wiki/Iris_virginica "Iris virginica") and [*Iris versicolor*](https://en.wikipedia.org/wiki/Iris_versicolor "Iris versicolor"));
+
+Features:
+
+-   length of the sepals
+
+-   length of the petals
+
+-   width of the sepals
+
+-   width of the petals.
+
+Opening and inspecting the data:
+
+```{r}
+data(iris)
+summary(iris)
+```
+
+Exploring the data:
+
+```{r}
+ggplot(iris, aes(x = Sepal.Length)) +
+  geom_histogram(binwidth = 0.1, fill = "pink", color = "black") +
+  labs(title = "Sepal.Length Distribution", x = "Sepal.Length", y = "Frequency")
+
+ggplot(iris, aes(x = Sepal.Width)) +
+  geom_histogram(binwidth = 0.1, fill = "pink", color = "black") +
+  labs(title = "Sepal.Width Distribution", x = "Sepal.Width", y = "Frequency")
+
+ggplot(iris, aes(x = Petal.Length)) +
+  geom_histogram(binwidth = 0.1, fill = "pink", color = "black") +
+  labs(title = "Petal.Length Distribution", x = "Petal.Length", y = "Frequency")
+
+ggplot(iris, aes(x = Petal.Width)) +
+  geom_histogram(binwidth = 0.1, fill = "pink", color = "black") +
+  labs(title = "Petal.Width Distribution", x = "Petal.Width", y = "Frequency")
+
+```
+
+In this tutorial we will investigate the impact of sepal and petals length on the sepal width (our outcome variable) independent of the species. In the future, you can try to do other interesting analysis, as assessing how much this features predict the length of the petals for each one of the species.
+
+In a Bayesian approach, we use a first belief of how likely is some hypothesis (prior) to be able to derive the probability of this hypothesis (posterior) after using the prior with the data we have.
+
+The specification of the prior distribution is a crucial point. In our case, we will use a normal distribution.
+
+```{r}
+# Specifying our prior distribution
+prior <- brms::prior(normal(0, 10), class=b) #set normal prior on regression coefficients (mean of 0, location of 3)
+```
+
+So, now we run or Bayesian regression by specifying our model:
+
+```{r}
+model <- brm(formula = Sepal.Width ~ Sepal.Length + Petal.Length, 
+             data    = iris,
+             seed    = 123,
+             prior = prior,
+             chains=4, # how many chains are run
+            iter = 500) # number of MCMC samples
+```
+
+Visualize the distribution of values for each parameters and the chains convergence.
+
+```{r}
+plot(model)
+```
+
+Now we will analyze and interpret the coefficients:
+
+```{r}
+summary(model)
+```
+
+We can see from the summary that our chains have converged sufficiently (rhat close to 1).
+
+The length of the sepals seems to be a relevant predictor of the length of the petals for iris flowers, with a posterior mean regression coefficient of 1.78, 95% Credibility Interval \[1.65, 1.90\]. The length of the petals are also relevant predictors, with a posterior mean of -0.33, and a 95% credibility Interval of \[-1.40, -0.28\]. Since the intervals do not include zero, we can be fairly sure there is an effect.
+
+Now, we will analyze the posterior distribution:
+
+```{r}
+pp_check(model, ndraws=100)
+
+```
+
+Analyzing the posterior, we see that the samples from the posterior predictive distribution (y_rep) seems to capture really well the observed data (y).
+
+Next week we will see how to make our model better!
+
+We can try other priors and then compare different models. We can also test interaction terms between the predictors, and check if all the predictor variables are really necessary.

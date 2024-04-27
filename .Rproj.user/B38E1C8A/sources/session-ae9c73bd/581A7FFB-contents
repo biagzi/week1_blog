@@ -1,0 +1,439 @@
+---
+title: "Lab 7 - Bayesian Data Analysis"
+author:
+  - name: Renata Biaggi Biazzi
+    date: last-modified
+    format:
+      html:
+        self-contained: true
+        anchor-sections: true
+        code-tools: true
+        code-fold: true
+        fig-width: 8
+        fig-height: 4
+        code-block-bg: "#f1f3f5"
+        code-block-border-left: "#31BAE9"
+        mainfont: Source Sans Pro
+        theme: journal
+        toc: true
+        toc-depth: 3
+        toc-location: left
+        captions: true
+        cap-location: margin
+        table-captions: true
+        tbl-cap-location: margin
+        reference-location: margin
+    execute:
+      warning: false
+      message: false
+---
+
+## A simple Bayesian linear regression: Power posing and testosterone
+
+The data set, which was originally published in Carney, Cuddy, and Yap ([2010](https://faculty.haas.berkeley.edu/dana_carney/power.poses.PS.2010.pdf)) but released in modified form by Fosse ([2016](https://vasishth.github.io/bayescogsci/book/ch-reg.html#ref-FossePowerPose)), shows the testosterone levels of 39 different individuals, before and after treatment, where treatment refers to each individual being assigned to a high power pose or a low power pose. In the original paper by Carney, Cuddy, and Yap ([2010](https://faculty.haas.berkeley.edu/dana_carney/power.poses.PS.2010.pdf)), the unit given for testosterone measurement (estimated from saliva samples) was picograms per milliliter (pg/ml). One picogram per milliliter is 0.001 nanogram per milliliter (ng/ml).
+
+The research hypothesis is that on average, assigning a subject to a high power pose vs. a low power pose will lead to higher testosterone levels after treatment. Assuming that you know nothing about normal ranges of testosterone using salivary measurement.
+
+Investigate this claim using a linear model and the default priors of `brms`. **You'll need to estimate the effect of a new variable that encodes the change in testosterone.**
+
+In this assignment you will run both a frequentist and a Bayesian regression analysis.
+
+## Dataset
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# get data for lab
+#install from github
+devtools::install_github("bnicenboim/bcogsci")
+library(bcogsci) # dataset for lab # install above
+library(tidyverse) # tidying and viz
+library(brms) # bayes regression
+library(modelr) # plot posterior and predictions
+library(marginaleffects) 
+library(tidybayes) # plot trace
+library(easystats) # bayestestR and see
+```
+
+```{r}
+powerpose <- bcogsci::df_powerpose
+```
+
+```{r}
+# You'll need to estimate the effect of a new variable that encodes the change in testosterone.
+head(powerpose)
+```
+
+## Explore the data
+
+> Explore the `hptreat`, `female`, and `age` variables
+
+```{r}
+ggplot(powerpose, aes(x = age)) +
+  geom_histogram(binwidth = 2, fill = "pink", color = "black") +
+  labs(title = "Age Distribution", x = "Age", y = "Frequency")
+
+ggplot(powerpose, aes(x = female)) +
+  geom_bar(fill = "pink", color = "black") +
+  labs(title = "Gender Distribution", x = "Gender", y = "Count")
+
+ggplot(powerpose, aes(x = hptreat)) +
+  geom_bar(fill = "pink", color = "black") +
+  labs(title = "Age Distribution", x = "Age", y = "Frequency")
+```
+
+```{r}
+#Dummy coding the varialbes
+powerpose$female_dummy <- ifelse(powerpose$female == "Female", 1, 0)
+powerpose$hptreat_dummy <- ifelse(powerpose$hptreat == "High", 1, 0)
+
+#Calculating the change in testosterone
+powerpose$diff_test <- powerpose$testm2 -  powerpose$testm1 
+
+powerpose
+```
+
+## OLS Regression
+
+> Run a frequentist regression and interpret the results
+
+```{r}
+frequent_reg <- lm(diff_test ~ hptreat_dummy, data=powerpose)
+
+model_parameters(frequent_reg) %>%
+  print_md()
+
+```
+
+::: callout-note
+Looking to the parameters significance, we see that none of them predicts the change in testosterone alone. All of them are p\>0.05. This means that the research hypothesis (on average, assigning a subject to a high power pose vs. a low power pose will lead to higher testosterone levels after treatment) seems not to be confirmed.
+:::
+
+## Bayesian Regression
+
+> Run a Bayesian regression. In the `brm` function set `chains` = 2 and `iter` = 100
+
+```{r}
+bayesian_reg <- brm(diff_test ~ hptreat_dummy, data=powerpose, #+ age + female_dummy
+chains=2, # how many chains are run
+iter = 100) # number of MCMC samples
+```
+
+> Look at the summary output from the above model. What is wrong here?
+
+```{r}
+summary(bayesian_reg)
+```
+
+::: callout-note
+The problem is that parts of the model didn't converge. The problem of it Rhats \> 1.05 means that the chains have not mixed well and have not explored the parameter space adequately, which leads to a lack of accuracy in representing the posterior distribution.
+:::
+
+> Try increasing the `chains` = 4 and `iter` = 5000
+
+```{r}
+bayesian_reg_2 <- brm(diff_test ~ hptreat_dummy , data=powerpose, #+ age + female_dummy
+chains=4, # how many chains are run
+iter = 5000) # number of MCMC samples
+```
+
+```{r}
+summary(bayesian_reg_2)
+```
+
+```{r}
+#Looking for trace plots
+bayesplot::color_scheme_set("mix-blue-red")
+bayesplot::mcmc_trace(bayesian_reg_2, pars = c("b_hptreat_dummy"), #,"b_age","b_female_dummy"
+           facet_args = list(ncol = 1, strip.position = "left"))
+```
+
+```{r}
+knitr::kable(diagnostic_posterior(bayesian_reg_2), digits=3)
+```
+
+> How did the MCMC sampler do when we increased number of chains and iterations? Include a discussion of the diagnostics: trace plots, $\hat{R}$, ESS estimates
+
+::: callout-note
+When we increase the number of chains and iterations, we need to look for trace plots, R and ESS estimates to understand what is happening.
+
+The trace plots show how the chains are exploring the parameter space. For the three variables, the trace plots explore the space evenly, having a random-walk-like behavior. When we increase the number of chains, we are increasing the exploration of the parameter space.
+
+The Gelman-Rubin statistics ($\hat{R}$) compares the variability within chains to the variability between chains. As it is around 1, this is a good indication of the consistency of the Markov Chains.
+
+The ESS estimate the chain mixing, and it need to be sufficiently large (\>1000). We see that this is accomplished in all the parameters.
+
+So, as the trace plots show good mixing, $\hat{R}$ is 1 and ESS estimates are high, the MCMC samples if performing well and increasing the number of chains and iterations was helpful to ensure the convergence of the model.
+:::
+
+## Describe the posterior distribution
+
+> Use `pp_check` to get a visualization of how well our model fits. How does it look? Use `ndraws=1000`
+
+```{r}
+pp_check(bayesian_reg_2, ndraws=1000)
+
+```
+
+::: callout-note
+The samples from the posterior predictive distribution (y_rep) seems to be roughly the same as the observed data (y). All of them are centered at 0 and have a similar variance around the mean.
+:::
+
+> What is the mean and median difference in testosterone between high and low power pose groups?
+
+```{r}
+library(bayestestR)
+model_parameters(bayesian_reg_2) %>%
+  knitr::kable()
+
+# Extract posterior samples for the coefficients
+posterior_samples <- as.data.frame(bayesian_reg_2)
+head(posterior_samples)
+
+# Calculate the mean and median difference in testosterone between high and low power pose groups
+#describe_posteriors(posterior_samples) not working
+
+mean_difference <- mean(posterior_samples$b_hptreat_dummy)
+median_difference <- median(posterior_samples$b_hptreat_dummy)
+
+mean_difference
+median_difference
+```
+
+::: callout-note
+## The mean difference is 8.235338 and the median difference is 8.274035.
+:::
+
+```{r}
+# Extract posterior samples for the coefficient associated with hptreatLow
+posterior_samples_hptreat <- posterior_samples$b_hptreat_dummy
+
+# Calculate the number of samples with positive and negative values
+num_pos<- sum(posterior_samples_hptreat > 0)
+num_neg <- sum(posterior_samples_hptreat < 0)
+
+# Calculate the probability of direction (pd)
+pd <- num_pos / (num_pos + num_neg)
+#PD= Number of samples in the desired direction/Total number of posterior samples
+
+pd
+
+```
+
+> What is the probability of direction (pd) for the effect? What does this mean?
+
+::: callout-note
+The probability of direction for the effect is 0.9106
+
+This mean that there is a 91% probability that the effect is positive based on the observed data and the Bayesian analysis.
+:::
+
+## Credible Intervals
+
+> What are the 95% CIs for the difference between high and low power pose groups?
+
+```{r}
+ci_95 <- hdi(posterior_samples$b_hptreat_dummy, prob = 0.95)
+ci_95
+```
+
+> Plot them using the `bayestestR` function `hdi (https://easystats.github.io/bayestestR/reference/hdi.html)`
+
+```{r}
+library('bayestestR')
+
+# Calculate the 95% credible interval for the difference between high and low power pose groups
+ci_95 <- hdi(posterior_samples$b_hptreat_dummy, prob = 0.95)
+
+# Plot the 95% credible interval
+plot(ci_95, main = "95% Credible Interval for Difference between High and Low Power Pose Groups",
+     xlab = "Difference in Testosterone Levels (Low Power Pose - High Power Pose)",
+     ylab = "Density")
+
+```
+
+## Bayes Factors (BFs)
+
+> Is the the difference between the high and low groups 0? Calculate a BF to examine this. However, before we can look at this, we need to re-run the model with a non-flat prior/weakly informative prior. We need to also make sure we sample from the prior. Use a normal prior with a mean of 0 and a standard deviation of 10.
+
+```{r}
+# you can set individual coefs or a class of params (for bs)
+prior1 <- brms::prior(normal(0, 10), class=b)
+
+```
+
+> Re-run the model you above with the prior you set. Set the argument `sample_prior` = true
+
+```{r}
+bayesian_reg_3 <- brm(diff_test ~ hptreat_dummy, #+ age + female_dummy, 
+data=powerpose,
+chains=4, # how many chains are run
+iter = 5000,
+prior = prior1,
+sample_prior = TRUE
+) 
+
+# Summarize the results
+summary(bayesian_reg_3)
+```
+
+-   Is there evidence that the difference between the groups is 0? How strong is the evidence?
+
+```{r}
+# Calculate Bayes Factor using Savage-Dickey density ratio method
+bf <- hypothesis(bayesian_reg_3, "hptreat_dummy = 0")
+
+bf
+
+#BF <- bayestestR::bayesfactor_parameters(bayesian_reg_3, null = 0)
+#BF
+
+#Yes, there is, as the parameter could be zero.
+```
+
+## Visualizing Uncertainty
+
+-   I want you to create a plot similar to the one below for the posterior distribution
+
+![](images/clipboard-27836774.png)
+
+> Using the examples from class/slides, visualize the posterior distribution for each group along with the median point-estimate and uncertainty intervals around the estimate (80% and 95% HDI). Here are some examples here: <https://cran.r-project.org/web/packages/tidybayes/vignettes/tidy-brms.html#posterior-means-and-predictions>. Try to create a cool figure (do not just copy the one above).
+
+```{r}
+# I can't see the example figure
+#bayesian_reg_3 %>%
+#  data_grid(hptreat_dummy) %>%
+#  ggplot(aes(y = hptreat_dummy)) +
+#  stat_interval(.width = c(.50, .80, .95, .99)) +
+#  geom_point(aes(x = response), data = ABC) +
+#  scale_color_brewer()
+#get_variables(bayesian_reg_3)
+
+#bayesian_reg_3 %>%
+#  spread_draws(b_Intercept, r_condition[condition,]) %>%
+#  mutate(condition_mean = b_Intercept + r_condition) %>%
+#  ggplot(aes(y = condition, x = condition_mean)) +
+#  stat_halfeye()
+
+#bayesian_reg_3 %>%
+#  data_grid(hptreat_dummy) %>%
+#  ggplot(aes(x = diff_test, y = hptreat_dummy)) +
+#  stat_slab()
+
+#powerpose %>%
+#  data_grid(hptreat_dummy) %>%
+#  add_predicted_draws(bayesian_reg_3) %>%
+#  ggplot(aes(x = .diff_test, y = hptreat_dummy)) +
+#  stat_slab()
+
+powerpose %>%
+  ggplot(aes(y = hptreat_dummy, x = diff_test)) +
+  stat_interval(aes(x = diff_test), data = powerpose) +
+  geom_point() +
+  scale_color_brewer()
+
+# I am not being able to do other types of plots
+```
+
+## Report
+
+> What are your conclusions based on the results?
+
+::: callout-note
+As the parameter could be zero, there is no significance.
+:::
+
+## Priors
+
+-   The priors for this experiment were quite arbitrary. Is our posterior distribution (mean/median) sensitive to the priors that we select? Perform a sensitivity analysis to find out whether the posterior is affected by our choice of priors. Try at least 3 different priors. Feel free to go crazy with the priors :). Read this blog for ideas: https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations
+
+```{r}
+# set prior using prior function
+prior1 <- prior(cauchy(0, .707), class=b)
+prior2 <- prior(normal(0, 5), class = b)
+prior3 <- prior(normal(0, .51), class = b)
+
+#include prior 
+# only sample from prior so we can plot it and look
+bayesian_reg_prior_1 <- brm(diff_test ~ hptreat_dummy, #+ age + female_dummy, 
+data=powerpose,
+chains=4, # how many chains are run
+iter = 5000,
+prior = prior1,
+sample_prior = TRUE
+) 
+pp_check(bayesian_reg_prior_1)
+
+# only sample from prior so we can plot it and look
+bayesian_reg_prior_2 <- brm(diff_test ~ hptreat_dummy,# + age + female_dummy, 
+data=powerpose,
+chains=4, # how many chains are run
+iter = 5000,
+prior = prior2,
+sample_prior = TRUE
+) 
+pp_check(bayesian_reg_prior_2)
+
+# only sample from prior so we can plot it and look
+bayesian_reg_prior_3 <- brm(diff_test ~ hptreat_dummy,# + age + female_dummy, 
+data=powerpose,
+chains=4, # how many chains are run
+iter = 5000,
+prior = prior3,
+sample_prior = TRUE
+) 
+pp_check(bayesian_reg_prior_3)
+# check prior
+```
+
+## Model comparisons
+
+-   Use a weakly informative prior
+
+> Test if `female` factor should be included in the model using a BF as evidence. You have to add the argument `save_pars = save_pars(all=TRUE)` before you run this model
+
+```{r}
+bayesian_reg_test_female <- brm(diff_test ~ hptreat_dummy + female, # + age, 
+data=powerpose,
+chains=4, # how many chains are run
+iter = 5000,
+prior = prior2,
+sample_prior = TRUE,
+save_pars = save_pars(all=TRUE)
+) 
+
+summary(bayesian_reg_test_female)
+```
+
+```{r}
+bayesfactor_models(bayesian_reg_3, bayesian_reg_test_female)
+
+```
+
+> How much evidence is there for adding the `female` variable into the model?
+
+::: callout-note
+A model with female and treatment is 0.890 times less likely than a model without female.
+:::
+
+> Now, add the interaction into the model and compare a model with and without the interaction. How much evidence is there for the interaction variable in the model?
+
+```{r}
+bayesian_reg_interact <- brm(diff_test ~ hptreat_dummy + hptreat_dummy*female, 
+data=powerpose,
+chains=4, # how many chains are run
+iter = 5000,
+prior = prior2,
+sample_prior = TRUE,
+save_pars = save_pars(all=TRUE)
+) 
+
+summary(bayesian_reg_interact)
+```
+
+```{r}
+bayesfactor_models(bayesian_reg_3, bayesian_reg_interact)
+
+```
+
+::: callout-note
+Testing the model with interaction, we found that a model WITH interaction is 10.2 times more likely than a model without interaction.
+:::

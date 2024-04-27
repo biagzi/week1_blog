@@ -1,0 +1,6 @@
+"0",""
+"0","plot(sex_prob) +"
+"0","  labs(title = ""Relationship between Sex and Attitude towards Spending on Mass Transportation"","
+"0","       x = ""Sex"","
+"0","       y = ""Predicted Probability"") +"
+"0","  theme_minimal()"

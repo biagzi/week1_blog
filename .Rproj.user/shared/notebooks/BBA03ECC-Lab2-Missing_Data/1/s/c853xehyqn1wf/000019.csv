@@ -1,0 +1,5 @@
+"0","d_imp %>%"
+"0","  group_by(.imp) %>%"
+"0","  summarise(mean_lpo = mean(lpo),"
+"0","            std_lpo = sd(lpo),"
+"0","            corr_lpo_lpr = cor(lpo,lpr))"

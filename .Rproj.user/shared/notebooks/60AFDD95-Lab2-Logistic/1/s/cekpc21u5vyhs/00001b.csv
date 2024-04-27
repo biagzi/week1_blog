@@ -1,0 +1,6 @@
+"0",""
+"0","plot(sei10_prob) +"
+"0","  labs(title = ""Relationship between SES and Attitude towards Spending on Mass Transportation"","
+"0","       x = ""SES"","
+"0","       y = ""Predicted Probability"") +"
+"0","  theme_minimal()"

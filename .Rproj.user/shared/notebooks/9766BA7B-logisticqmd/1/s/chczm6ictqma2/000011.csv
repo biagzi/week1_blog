@@ -1,0 +1,2 @@
+"0","#effect is computed for each observed value in the original dataset before being averaged"
+"0","avg_slopes(fit3)%>%kable()"

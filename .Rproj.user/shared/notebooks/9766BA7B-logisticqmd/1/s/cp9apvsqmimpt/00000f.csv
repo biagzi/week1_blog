@@ -1,0 +1,18 @@
+"0","#| fig-align: ""center"""
+"0","#| fig-height: 4"
+"0","#| fig-width: 8"
+"0","#| "
+"0","library(ggeffects)"
+"2","
+Attaching package: ‘ggeffects’
+
+"
+"2","The following object is masked from ‘package:easystats’:
+
+    install_latest
+
+"
+"0","ggemmeans(fit4, terms=c(""bmipct"", ""female"")) %>%"
+"0","  plot(ci = TRUE, add.data = TRUE, jitter=.05)"
+"2","Data were 'prettified'. Consider using `terms=""bmipct [all]""` to get smooth plots.
+"

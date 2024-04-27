@@ -1,0 +1,23 @@
+"0","    library(fivethirtyeight)"
+"2","Some larger datasets need to be installed separately, like senators and
+house_district_forecast. To install these, we recommend you install the fivethirtyeightdata
+package by running: install.packages('fivethirtyeightdata', repos =
+'https://fivethirtyeightdata.github.io/drat/', type = 'source')
+"
+"2","
+Attaching package: ‘fivethirtyeight’
+
+"
+"2","The following object is masked _by_ ‘.GlobalEnv’:
+
+    bechdel
+
+"
+"0","    bechdel=fivethirtyeight::bechdel"
+"0",""
+"0","    #fit <- glm("
+"0","     # data = bechdel,"
+"0","     # family = binomial(link=""logit""),"
+"0","     # binary  ~ 1 + budget_2013)"
+"0",""
+"0","    bechdel %>% dplyr::select(title, binary) %>% head() %>% kable()"

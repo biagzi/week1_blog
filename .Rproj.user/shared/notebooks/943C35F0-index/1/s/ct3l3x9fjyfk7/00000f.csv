@@ -1,0 +1,33 @@
+"0","library(rstan) "
+"2","Loading required package: StanHeaders
+"
+"2","
+rstan version 2.32.6 (Stan version 2.32.2)
+
+"
+"2","For execution on a local, multicore CPU with excess RAM we recommend calling
+options(mc.cores = parallel::detectCores()).
+To avoid recompilation of unchanged Stan programs, we recommend calling
+rstan_options(auto_write = TRUE)
+For within-chain threading using `reduce_sum()` or `map_rect()` Stan functions,
+change `threads_per_chain` option:
+rstan_options(threads_per_chain = 1)
+
+"
+"2","
+Attaching package: ‘rstan’
+
+"
+"2","The following object is masked from ‘package:tidyr’:
+
+    extract
+
+"
+"2","The following object is masked from ‘package:psych’:
+
+    lookup
+
+"
+"0","library(brms)"
+"0","library(psych) #to summary statistics"
+"0","library(tidyverse) # for data manipulation and plotting"

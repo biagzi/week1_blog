@@ -1,0 +1,4 @@
+"0","df$TRT = as.factor(df$TRT)"
+"0","df = df %>%"
+"0","  mutate(TRT_dev=ifelse(TRT==1, .5, -.5))"
+"0",""

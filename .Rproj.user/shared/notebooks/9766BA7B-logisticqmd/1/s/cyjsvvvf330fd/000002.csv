@@ -1,0 +1,6 @@
+"0","# young men
+plogis(b0 + b1 * 0)
+# young women
+plogis(b0 + b1 * 1)"
+"2","/bin/sh: webr-r: command not found
+"

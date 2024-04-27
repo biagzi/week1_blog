@@ -1,0 +1,3 @@
+"0","risk2009 %>% "
+"0","  count(lose.wt.01) %>% "
+"0","  mutate(proportion = n / sum(n))"

@@ -1,0 +1,4 @@
+"0","performance::binned_residuals(fit3)"
+"1","[33mWarning: About 92% of the residuals are inside the error bounds (~95% or higher would be good).
+[39m"
+"0","binned_residuals(fit3, term=""sei10"") %>% plot(show_dots=TRUE)"

@@ -1,0 +1,6 @@
+"0",""
+"0","risk2009 %>% "
+"0","  ggplot(aes(x = bmipct)) +"
+"0","  geom_histogram(binwidth = 5) +"
+"0","  facet_grid(lose.wt ~ sex) + "
+"0","  theme_lucid(base_size=24)"

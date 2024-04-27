@@ -1,0 +1,3 @@
+"0","m=5"
+"0","imp <- mice(d, m = m, seed = 1,print = FALSE)"
+"2","Warning: Number of logged events: 100"

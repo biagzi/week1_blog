@@ -1,0 +1,8 @@
+"0","fit_intercept <- glm("
+"0","  data = data,"
+"0","  family = binomial(link=""logit""),"
+"0","  bin_amount_transport ~ 1"
+"0","  ) "
+"0","fit_intercept %>% "
+"0","  tidy() %>%"
+"0","  kable()"

@@ -1,0 +1,4 @@
+"0","level1_model_interaction_TRT <-  lmer(ETW_SpringK ~ TRT * PPVT_FallK + (1 + TRT + PPVT_FallK|clu_id), data = df)"
+"2","boundary (singular) fit: see help('isSingular')
+"
+"0","  "

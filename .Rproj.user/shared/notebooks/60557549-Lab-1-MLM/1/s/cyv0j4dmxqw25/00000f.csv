@@ -1,0 +1,8 @@
+"0","within_group_var =  104.43 #residual variance"
+"0","between_group_var = 19.91 #intercept variance"
+"0","icc = between_group_var/(within_group_var+between_group_var)"
+"0","icc"
+"1","[1]"
+"1"," 0.1601255"
+"1","
+"
