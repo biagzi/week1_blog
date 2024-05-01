@@ -62,15 +62,15 @@ ggplot(iris, aes(x = Petal.Width)) +
 
 ```
 
-In this tutorial we will investigate the impact of sepal and petals length on the sepal width (our outcome variable) independent of the species. In the future, you can try to do other interesting analysis, as assessing how much this features predict the length of the petals for each one of the species.
+In this tutorial we will investigate the impact of sepal and petals length on the sepal width (our outcome variable), independent of the species. In the future, you can try to do other interesting analysis, as assessing how much these features predict the length of the petals for each one of the species.
 
 In a Bayesian approach, we use a first belief of how likely is some hypothesis (prior) to be able to derive the probability of this hypothesis (posterior) after using the prior with the data we have.
 
-The specification of the prior distribution is a crucial point. In our case, we will use a normal distribution.
+The specification of the prior distribution is a crucial point. In our case, we will use a normal distribution (a non-informative prior). This distribution represent our prior belief on the parameters's distribution, in our case, we are considering it almost like a null hypothesis (if the parameters of our model are zero, this is equivalent to say there is no relationship between the dependent and independent variables).​
 
 ```{r}
 # Specifying our prior distribution
-prior <- brms::prior(normal(0, 10), class=b) #set normal prior on regression coefficients (mean of 0, location of 3)
+prior <- brms::prior(normal(0, 10), class=b) #set normal prior on regression coefficients (mean of 0,std 10)
 ```
 
 So, now we run or Bayesian regression by specifying our model:
@@ -108,6 +108,8 @@ pp_check(model, ndraws=100)
 ```
 
 Analyzing the posterior, we see that the samples from the posterior predictive distribution (y_rep) seems to capture really well the observed data (y).
+
+Thus, we learned that the sepal width is not independent on the length of the sepals and the length of the petals. We also learned the distributions of values for our model parameters that can significantly predict sepal width given the length of the sepals and petals.
 
 Next week we will see how to make our model better!
 

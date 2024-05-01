@@ -15,10 +15,6 @@ about:
       href: https://github.com
 ---
 
-I am a first year graduate student in Psychology at Princeton University.
-
-I am originally from Brazil, where I completed my undergrad in Physics and Masters in Bioinformatic. I love to share and discuss science, mostly quantitative methods to tackle interdisciplinary problems in evolution, development, and animal behavior.
+This blog is a project for **PSY 504 - Advanced Statistics:** Advanced Statistical Methods in Psychology.
 
 Feel free to contact me :)
-
-(In the photo you can see Simba, my adorable dog!)

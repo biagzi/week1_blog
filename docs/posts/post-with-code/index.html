@@ -318,12 +318,12 @@ Attaching package: 'psych'</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-3-4.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>In this tutorial we will investigate the impact of sepal and petals length on the sepal width (our outcome variable) independent of the species. In the future, you can try to do other interesting analysis, as assessing how much this features predict the length of the petals for each one of the species.</p>
+<p>In this tutorial we will investigate the impact of sepal and petals length on the sepal width (our outcome variable), independent of the species. In the future, you can try to do other interesting analysis, as assessing how much these features predict the length of the petals for each one of the species.</p>
 <p>In a Bayesian approach, we use a first belief of how likely is some hypothesis (prior) to be able to derive the probability of this hypothesis (posterior) after using the prior with the data we have.</p>
-<p>The specification of the prior distribution is a crucial point. In our case, we will use a normal distribution.</p>
+<p>The specification of the prior distribution is a crucial point. In our case, we will use a normal distribution. This distribution represent our prior belief on the parameters’s distribution, in our case, we are considering it almost like a null hypothesis (if the parameters of our model are zero, this is equivalent to say there is no relationship between the dependent and independent variables).​</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Specifying our prior distribution</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>prior <span class="ot">&lt;-</span> brms<span class="sc">::</span><span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="at">class=</span>b) <span class="co">#set normal prior on regression coefficients (mean of 0, location of 3)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>prior <span class="ot">&lt;-</span> brms<span class="sc">::</span><span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="at">class=</span>b) <span class="co">#set normal prior on regression coefficients (mean of 0,std 10)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>So, now we run or Bayesian regression by specifying our model:</p>
 <div class="cell">
@@ -337,32 +337,14 @@ Attaching package: 'psych'</code></pre>
 <pre><code>Compiling Stan program...</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Trying to compile a simple C file</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Running /Library/Frameworks/R.framework/Resources/bin/R CMD SHLIB foo.c
-using C compiler: ‘Apple clang version 15.0.0 (clang-1500.3.9.4)’
-using SDK: ‘MacOSX14.4.sdk’
-clang -arch arm64 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG   -I"/Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/library/Rcpp/include/"  -I"/Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/library/RcppEigen/include/"  -I"/Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/library/RcppEigen/include/unsupported"  -I"/Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/library/BH/include" -I"/Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/library/StanHeaders/include/src/"  -I"/Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/library/StanHeaders/include/"  -I"/Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/library/RcppParallel/include/"  -I"/Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/library/rstan/include" -DEIGEN_NO_DEBUG  -DBOOST_DISABLE_ASSERTS  -DBOOST_PENDING_INTEGER_LOG2_HPP  -DSTAN_THREADS  -DUSE_STANC3 -DSTRICT_R_HEADERS  -DBOOST_PHOENIX_NO_VARIADIC_EXPRESSION  -D_HAS_AUTO_PTR_ETC=0  -include '/Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/library/StanHeaders/include/stan/math/prim/fun/Eigen.hpp'  -D_REENTRANT -DRCPP_PARALLEL_USE_TBB=1   -I/opt/R/arm64/include    -fPIC  -falign-functions=64 -Wall -g -O2  -c foo.c -o foo.o
-In file included from &lt;built-in&gt;:1:
-In file included from /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/library/StanHeaders/include/stan/math/prim/fun/Eigen.hpp:22:
-In file included from /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/library/RcppEigen/include/Eigen/Dense:1:
-In file included from /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/library/RcppEigen/include/Eigen/Core:19:
-/Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:679:10: fatal error: 'cmath' file not found
-#include &lt;cmath&gt;
-         ^~~~~~~
-1 error generated.
-make: *** [foo.o] Error 1</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
 <pre><code>Start sampling</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 1.5e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.
+Chain 1: Gradient evaluation took 1.6e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.16 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -430,8 +412,8 @@ Chain 3: Iteration: 450 / 500 [ 90%]  (Sampling)
 Chain 3: Iteration: 500 / 500 [100%]  (Sampling)
 Chain 3: 
 Chain 3:  Elapsed Time: 0.007 seconds (Warm-up)
-Chain 3:                0.005 seconds (Sampling)
-Chain 3:                0.012 seconds (Total)
+Chain 3:                0.004 seconds (Sampling)
+Chain 3:                0.011 seconds (Total)
 Chain 3: 
 
 SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).
@@ -462,14 +444,14 @@ Chain 4: </code></pre>
 </div>
 <p>Visualize the distribution of values for each parameters and the chains convergence.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Now we will analyze and interpret the coefficients:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: gaussian 
   Links: mu = identity; sigma = identity 
@@ -497,12 +479,13 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <p>The length of the sepals seems to be a relevant predictor of the length of the petals for iris flowers, with a posterior mean regression coefficient of 1.78, 95% Credibility Interval [1.65, 1.90]. The length of the petals are also relevant predictors, with a posterior mean of -0.33, and a 95% credibility Interval of [-1.40, -0.28]. Since the intervals do not include zero, we can be fairly sure there is an effect.</p>
 <p>Now, we will analyze the posterior distribution:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pp_check</span>(model, <span class="at">ndraws=</span><span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pp_check</span>(model, <span class="at">ndraws=</span><span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Analyzing the posterior, we see that the samples from the posterior predictive distribution (y_rep) seems to capture really well the observed data (y).</p>
+<p>Thus, we learned that the sepal width is not independent on the length of the sepals and the length of the petals. We also learned the distributions of values for our model parameters that can significantly predict sepal width given the length of the sepals and petals.</p>
 <p>Next week we will see how to make our model better!</p>
 <p>We can try other priors and then compare different models. We can also test interaction terms between the predictors, and check if all the predictor variables are really necessary.</p>
 

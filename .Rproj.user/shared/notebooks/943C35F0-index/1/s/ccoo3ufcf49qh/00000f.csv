@@ -1,6 +1,2 @@
 "0","# Specifying our prior distribution"
-"0","prior <- brms::prior(normal(0, 10), class=b) #set normal prior on regression coefficients (mean of 0, location of 3)"
-"0",""
-"0","#prior <- prior(cauchy(0, .707), class=b)"
-"0","#prior2 <- prior(normal(0, 5), class = b)"
-"0","#prior3 <- prior(normal(0, .51), class = b)"
+"0","prior <- brms::prior(normal(3, 2), class=b) #set normal prior on regression coefficients (mean of 0,std 10)"
