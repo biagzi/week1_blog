@@ -8,14 +8,49 @@ image: "Petal-sepal.jpg"
 
 In this tutorial, I will show how to do a **Bayesian regression** using [brms](https://cran.r-project.org/web/packages/brms/index.html)!
 
+So, the first thing to answer is why use a Bayesian regression..
+
+Compared to an Ordinary Least Squares regression, a Bayesian regression allows us to determine distributions for the model parameters, instead of point estimate and a confidence interval. It is based on the **Bayes' Rule,** a theorem that defines how the events of conditional probabilities relate with each other:
+
+$$
+P[A|B] = \frac{P[A \& B]}{P[B]} = P[B|A] \frac{P[A]}{P[B]}
+$$
+
+In our case, we want to estimate A (the model parameters) given B (some data):
+
+$$
+P[model|data] = P[data|model] \frac{P[model]}{P[data]}
+$$
+
+In Bayesian inference (we want to infer the model parameters) we use some especif names for each term of the equation:
+
+$$
+Posterior = Likelihood \frac{Prior}{Normalization}
+$$
+
+The Posterior is the posterior probability distribution of the model parameters that we want to estimate. The Likelihood is the probability of observing the data given the model we are considering. The Prior is the prior probability distribution for the model parameters. If we have knowledge of the phenomenon, we can include it in the model by choosing some specific prior that reflects our knowledge. However, if we don't have any previous expectations, we can use non-informative priors (such as a normal distribution) for the parameters.
+
+Now we can follow with the application of these ideas:
+
 The first part is loading the necessary packages:
+
+```{r,  include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+
+```
 
 ```{r}
 library(datasets) #to open the dataset
 library(rstan) 
 library(brms)
+library(knitr)
 library(psych) #to summary statistics
 library(tidyverse) # for data manipulation and plotting
+library(marginaleffects) # get posteriors 
+library(ggeffects) # graph
+library(easystats) # easystats packages # bayesttestR 
+library(bayesplot) # graph trace plots
+library(ggdist) # graph distributions and geoms
 ```
 
 In this tutorial, we will use data from the Iris data set - maybe one of the most famous data sets ever. It was used by the British statistician and biologist Ronald Fisher to show how to distinguish three different, but related, species of Iris flowers using their morphological features. Edgar Anderson collected the data when he was trying to quantify the morphological variation of them.
@@ -107,9 +142,7 @@ pp_check(model, ndraws=100)
 
 ```
 
-Analyzing the posterior, we see that the samples from the posterior predictive distribution (y_rep) seems to capture really well the observed data (y).
-
-Thus, we learned that the sepal width is not independent on the length of the sepals and the length of the petals. We also learned the distributions of values for our model parameters that can significantly predict sepal width given the length of the sepals and petals.
+Analyzing the posterior, we see that the samples from the posterior predictive distribution (y_rep) seems to capture really well the observed data (y).Thus, we learned that the sepal width is not independent on the length of the sepals and the length of the petals. We also learned the distributions of values for our model parameters that can significantly predict sepal width given the length of the sepals and petals.
 
 Next week we will see how to make our model better!
 
